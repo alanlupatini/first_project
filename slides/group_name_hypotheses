@@ -27,4 +27,4 @@ H3 (Age-related): Locations with a higher proportion of residents in the 65 and 
 H4 (Age-related): Locations with a higher proportion of the 18 - 27 age group will correlate with a higher rate of Drugs offenses (per capita), reflecting typical patterns of drug use and policing effort.
 
 Specific Crime Hypotheses
-H5 (Temporal Trend): The rate of Car theft (stolen cars) has declined over the years covered in the dataset, due to modern vehicle anti-theft technology.
+H5 (Temporal Trend): The rate of Car theft has declined over the years covered in the dataset, due to modern vehicle anti-theft technology and added video surveillance.

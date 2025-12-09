@@ -1,64 +1,9 @@
-# Project overview
-The Berlin Institute for Urban Safety (BIUS)
+The Berlin Institute for Urban Safety (BIUS) 🏙️
 
 Focus: An independent, non-profit think tank dedicated to researching the causes and consequences of crime for evidence-based policy recommendations.
 
 
-# Installation
-
-1. **Clone the repository**:
-
-```bash
-git clone https://github.com/YourUsername/repository_name.git
-```
-
-2. **Install UV**
-
-If you're a MacOS/Linux user type:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-If you're a Windows user open an Anaconda Powershell Prompt and type :
-
-```bash
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-3. **Create an environment**
-
-```bash
-uv venv 
-```
-
-3. **Activate the environment**
-
-If you're a MacOS/Linux user type (if you're using a bash shell):
-
-```bash
-source ./venv/bin/activate
-```
-
-If you're a MacOS/Linux user type (if you're using a csh/tcsh shell):
-
-```bash
-source ./venv/bin/activate.csh
-```
-
-If you're a Windows user type:
-
-```bash
-.\venv\Scripts\activate
-```
-
-4. **Install dependencies**:
-
-```bash
-uv pip install -r requirements.txt
-```
-
-# Questions 
+Analysis Goals
 
 Goal A: Develop a Crime Risk Index.
 Action: Create a weighted index that combines crime rates (crime count / population) for multiple crime categories to rank Berlin's districts/locations from safest to most dangerous. This could be a single, easily digestible metric for policymakers.
@@ -83,22 +28,3 @@ H4 (Age-related): Locations with a higher proportion of the 18 - 27 age group wi
 
 Specific Crime Hypotheses
 H5 (Temporal Trend): The rate of Car theft (stolen cars) has declined over the years covered in the dataset, due to modern vehicle anti-theft technology.
-
-
-# Dataset 
-We used two raw datasets, one containing demographic information from Berlin's districs and another with information of different crimes commited per district. 
-
-## Main dataset issues
-
-- District names contain German characters that need to be cleaned out to work in UTF-8. 
-- ...
-- ...
-
-## Solutions for the dataset issues
-- We had to remove umlauts and eszetts, for example, substituting them with UTF-8 characters.
-
-# Conclussions
-...
-
-# Next steps
-...

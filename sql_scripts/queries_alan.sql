@@ -1,5 +1,52 @@
 USE berlincrimes;
 
+SELECT District from crimes;
+
+SELECT DISTINCT district
+FROM population;
+
+
+
+
+SELECT
+    location_id,
+    COUNT(*) AS count_of_duplicates
+FROM
+    population
+GROUP BY
+    location_id
+HAVING
+    COUNT(*) > 1;
+    
+SELECT
+    District,
+    COUNT(*) AS count_of_duplicates
+FROM
+    crimes
+GROUP BY
+    District
+HAVING
+    COUNT(*) > 1;
+    
+SELECT
+    Location,
+    COUNT(*) AS count_of_duplicates
+FROM
+    crimes
+GROUP BY
+    Location
+HAVING
+    COUNT(*) > 1;
+    
+SELECT
+    Code,
+    COUNT(*) AS count_of_duplicates
+FROM
+    crimes
+GROUP BY
+    Code
+HAVING
+    COUNT(*) > 1;
 
 -- CRI Analysis by District
 
@@ -85,12 +132,25 @@ ORDER BY
 
 
 
--- You can repeat this for other groups, like 'age_65_plus' to find retirement-heavy areas.
+-- crime tuypes per year
 SELECT
     Year,
-    SUM(Street_robbery) AS Total_Street_Robberies
+    SUM(Robbery) AS Total_Robbery,
+    SUM(Street_robbery) AS Total_Street_Robbery,
+    SUM(Agg_assault) AS Total_Agg_Assault,
+    SUM(Threat) AS Total_Threat,
+    SUM(Theft) AS Total_Theft,
+    SUM(Car) AS Total_Car_Theft,
+    SUM(From_car) AS Total_Theft_From_Car,
+    SUM(Bike) AS Total_Bike_Theft,
+    SUM(Burglary) AS Total_Burglary,
+    SUM(Fire) AS Total_Fire,
+    SUM(Arson) AS Total_Arson,
+    SUM(Damage) AS Total_Damage,
+    SUM(Graffiti) AS Total_Graffiti,
+    SUM(Drugs) AS Total_Drugs
 FROM
-    Crimes
+    crimes
 GROUP BY
     Year
 ORDER BY

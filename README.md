@@ -6,11 +6,8 @@ The Berlin Institute for Urban Safety (BIUS)
 
 Focus: An independent, non-profit think tank dedicated to researching the causes and consequences of crime for evidence-based policy recommendations.
 
->>>>>>> main
-
-## Project Overview
-
 This project is an independent analysis conducted on behalf of the **Berlin Institute for Urban Safety (BIUS)**, a non-profit think tank. The goal is to conduct evidence-based research into the causes and consequences of crime for evidence-based policy recommendations.
+The presentation of this project is available here: https://docs.google.com/presentation/d/1Y4ldaEibWwJ1H7KI63VCK8tHZ-8zNZeO/edit?usp=sharing&ouid=105239850282776443277&rtpof=true&sd=true
 
 ---
 

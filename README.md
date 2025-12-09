@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is an independent analysis conducted on behalf of the **Berlin Institute for Urban Safety (BIUS)**, a non-profit think tank. The goal is to conduct evidence-based research into the causes and consequences of crime in Berlin to support data-driven policy recommendations for municipal safety.
+This project is an independent analysis conducted on behalf of the **Berlin Institute for Urban Safety (BIUS)**, a non-profit think tank. The goal is to conduct evidence-based research into the causes and consequences of crime for evidence-based policy recommendations.
 
 ---
 
@@ -53,12 +53,16 @@ The second day was dedicated to preparing the raw data for analysis by ensuring 
 2.  **Umlaut Removal:** Umlauts and other special characters were removed from string columns (e.g., `District` names) to prevent encoding issues during merging and analysis.
 3.  **Initial Dataset Analysis:** Conducted the first dataset analysis and EDA on the separate data sources to understand distributions and data quality issues.
 
-### Data Integration and Modeling (ERD) 📐
-
-- **Action:** The **Entity-Relationship Diagram (ERD)** was created to formally define the database structure and ensure the integrity of the merge operation.
-- **Relationship:** The two datasets are linked by a **One-to-Many** relationship, where **one unique postal area** (`postal_code` in Demographics) can have **many** associated annual crime statistics records (`Code` in Crime_Statistics).
-  - **PK (Demographics):** `postal_code`
-  - **FK (Crime_Statistics):** `Code` references `Demographics.postal_code`
-- **Action:** The two cleaned DataFrames were merged using an **inner join** on the appropriate key columns (`postal_code` and `Code`).
-
 ---
+
+Data Integration, Modeling (ERD), and Feature Engineering
+
+Day 3 focuses on uniting the disparate data sources based on the established ERD, and preparing the calculated features for hypothesis testing.
+
+### 1. Data Integration and Modeling (ERD) 📐
+
+- **Action:** The **Entity-Relationship Diagram (ERD)** was formalized, establishing a robust three-table structure required for integration.
+- **Relationship:** The final model confirms a **Many-to-Many** relationship between **Population** and **Crimes**, linked via the **Location** (bridge) table.
+  - **Tables:** `Population` (Demographics), `Crimes` (Statistics), and `Location` (Bridge/Intermediate).
+  - **Key Merge Strategy:** A **two-step inner join** is used: first linking `Crimes` to `Location`, and then linking the result to `Population` on `postal_code`.
+- **Final Result:** A master DataFrame containing all crime and population statistics linked by the correct geographical and temporal keys.

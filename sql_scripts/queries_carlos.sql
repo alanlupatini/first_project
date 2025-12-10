@@ -50,7 +50,6 @@ GROUP BY c.code, c.location, p.total
 ORDER BY crimes_per_1000 DESC;
 
 
-=======
 # violent crimes per district
 
 SELECT 

@@ -1,5 +1,13 @@
 USE berlincrimes;
 
+ALTER TABLE `bridge`
+ADD FOREIGN KEY(`code`) REFERENCES `population`(`postal_code`)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE `crime`
+ADD FOREIGN KEY(`district_ID`) REFERENCES `bridge`(`district_ID`)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
 SELECT District from crimes;
 
 SELECT DISTINCT district
@@ -9,7 +17,7 @@ FROM population;
 
 
 SELECT
-    location_id,
+    postal_code,
     COUNT(*) AS count_of_duplicates
 FROM
     population
@@ -157,18 +165,39 @@ ORDER BY
     Year ASC;
 
 
+-- CRIMES PER YEAR PER DISTRICT
 
--- Crimes per year and district
 SELECT
     Year,
-    District,
-    -- Sum all 16 individual crime columns to get the total crimes for that District and Year
+    -- Apply the full, nested replacement logic for display and aliasing
+    REPLACE(
+        REPLACE(
+            REPLACE(
+                REPLACE(District, 'Ã¤', 'ae'), 
+                'Ã¶', 'oe'
+            ), 
+            'Ã¼', 'ue'
+        ),
+        'ÃŸ', 'ss'
+    ) AS Corrected_District,
+    -- Sum all crime columns
     SUM(Robbery + Street_robbery + Injury + Agg_assault + Threat + Theft + Car + From_car + Bike + Burglary + Fire + Arson + Damage + Graffiti + Drugs + Local) AS Total_Crimes_Per_District_Year
 FROM
     Crimes
 GROUP BY
     Year,
-    District
+    -- *** FIX HERE: Use the exact same nested REPLACE logic as above ***
+    REPLACE(
+        REPLACE(
+            REPLACE(
+                REPLACE(District, 'Ã¤', 'ae'), 
+                'Ã¶', 'oe'
+            ), 
+            'Ã¼', 'ue'
+        ),
+        'ÃŸ', 'ss'
+    )
 ORDER BY
     Year ASC,
     Total_Crimes_Per_District_Year DESC;
+    

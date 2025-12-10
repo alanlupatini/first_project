@@ -262,6 +262,8 @@ ORDER BY
 SUM(CASE WHEN YearlyCrimes.year = 2019 THEN YearlyCrimes.total_crimes ELSE 0 END) DESC;
 
 
+
+
 -- most common crimes in alexanderplatz in 2019
 
 SELECT
@@ -367,3 +369,72 @@ GROUP BY
     crime_type
 ORDER BY
     total_count DESC;
+    
+    
+    -- Hypothesis 4 verification: drug crimes in younger neighbourhoods
+WITH AggregatedPopulation AS (
+    SELECT
+        district,
+        SUM(total) AS total_pop,
+        SUM(age_18_to_27) AS age_18_27_pop
+    FROM
+        population
+    GROUP BY
+        district
+    HAVING
+        SUM(total) > 10000
+)
+SELECT
+    ap.district,
+    ap.total_pop AS District_Population,
+    ap.age_18_27_pop AS Age_18_27_Total,
+    ROUND(
+        (CAST(ap.age_18_27_pop AS REAL) / ap.total_pop) * 100, 
+        2
+    ) AS Age_18_27_Proportion_Percent,
+    SUM(c.drugs) AS Total_Drugs_Offenses,
+    ROUND(
+        (CAST(SUM(c.drugs) AS REAL) / NULLIF(ap.total_pop, 0)) * 1000, 
+        2
+    ) AS Drugs_Rate_Per_1K_Total_Pop
+
+FROM
+    AggregatedPopulation ap
+JOIN
+    crimes c ON ap.district = c.district
+
+GROUP BY
+    ap.district, ap.total_pop, ap.age_18_27_pop
+ORDER BY
+    Drugs_Rate_Per_1K_Total_Pop DESC;
+    
+    
+    
+    -- hypothesis 5 verification, car theft decline over time
+    WITH YearlyCrimeData AS (
+    SELECT
+        year,
+        SUM(car) AS Total_Car_Offenses
+    FROM
+        crimes
+    GROUP BY
+        year
+),
+TotalPopulation AS (
+    SELECT
+        SUM(total) AS Overall_Total_Population
+    FROM
+        population
+)
+SELECT
+    ycd.year,
+    ycd.Total_Car_Offenses,
+    tp.Overall_Total_Population,
+    (CAST(ycd.Total_Car_Offenses AS REAL) / tp.Overall_Total_Population) * 100000 AS Car_Theft_Rate_Per_100K
+
+FROM
+    YearlyCrimeData ycd
+CROSS JOIN 
+    TotalPopulation tp
+ORDER BY
+    ycd.year;

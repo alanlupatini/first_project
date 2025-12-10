@@ -1,5 +1,9 @@
 use hufflepuff;
 
+
+# 
+#-------------------------------------------------------------------------------------
+
 #Total crimes per district
 
 SELECT district, SUM(robbery + street_robbery + injury + agg_assault + threat + theft +
@@ -214,6 +218,75 @@ LEFT JOIN crime_data c
 GROUP BY p.district;
 
 
+#--------------------------------------------------------------------------------------------------
+
+# H1 – General Crime Rate vs Population
+
+-- Create a unique population per district
+CREATE TEMPORARY TABLE population_unique AS
+SELECT 
+    LOWER(district) AS district,
+    MAX(total) AS total
+FROM population_data
+GROUP BY LOWER(district);
+
+-- Total crimes per district, aggregated
+SELECT 
+    LOWER(c.district) AS district,
+    SUM(c.robbery + c.street_robbery + c.injury + c.agg_assault + c.threat +
+        c.theft + c.car + c.from_car + c.bike + c.burglary + c.fire + 
+        c.arson + c.damage + c.graffiti + c.drugs + c.local) AS total_crimes,
+    p.total AS population,
+    ROUND(SUM(c.robbery + c.street_robbery + c.injury + c.agg_assault + c.threat +
+        c.theft + c.car + c.from_car + c.bike + c.burglary + c.fire + 
+        c.arson + c.damage + c.graffiti + c.drugs + c.local) / p.total * 1000, 2) 
+        AS crimes_per_1000
+FROM crime_data c
+JOIN population_unique p
+    ON LOWER(c.district) = p.district
+GROUP BY LOWER(c.district), p.total
+ORDER BY total_crimes DESC;
 
 
+# H2 – Regierungsviertel Threat & Damage
 
+SELECT
+    LOWER(c.district) AS district,
+    ROUND(SUM(c.threat + c.damage) / SUM(p.total) * 1000, 2) AS threat_damage_per_1000
+FROM crime_data c
+JOIN population_data p
+    ON LOWER(c.district) = LOWER(p.district)
+GROUP BY LOWER(c.district)
+ORDER BY threat_damage_per_1000 DESC;
+
+
+# H3 – Older Population & Burglary
+
+SELECT
+    LOWER(p.district) AS district,
+    SUM(p.age_55_to_65 + p.age_65_plus) AS older_population,
+    SUM(c.burglary) AS total_burglary,
+    ROUND(SUM(c.burglary) / SUM(p.age_55_to_65 + p.age_65_plus) * 1000, 2) AS burglary_per_1000_older
+FROM population_data p
+LEFT JOIN crime_data c
+    ON LOWER(p.district) = LOWER(c.district)
+GROUP BY district;
+
+# H4 – Young Population & Drug Offenses
+
+SELECT
+    LOWER(p.district) AS district,
+    SUM(p.age_18_to_27 + p.age_27_to_45) AS young_population,
+    SUM(c.drugs) AS total_drugs,
+    ROUND(SUM(c.drugs) / SUM(p.age_18_to_27 + p.age_27_to_45) * 1000, 2) AS drugs_per_1000_young
+FROM population_data p
+LEFT JOIN crime_data c
+    ON LOWER(p.district) = LOWER(c.district)
+GROUP BY district;
+
+# H5 – Car Theft Trend Over Years
+
+SELECT year, SUM(car) AS total_car_theft
+FROM crime_data
+GROUP BY year
+ORDER BY year ASC;

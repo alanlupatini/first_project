@@ -59,7 +59,7 @@ The second day focused on preparing the raw data for analysis and ensuring consi
 
 Day 3 focused on merging the datasets, calculating features, and creating SQL queries for analysis.
 
-### ## 📐 Data Integration and Modeling (ERD)
+### Data Integration and Modeling (ERD)
 
 For this project, we have **three main tables**:
 
@@ -116,14 +116,36 @@ Contains crime counts by location and year.
 
 ---
 
-### MySQL Queries
+## Crime Analysis – Hypotheses Testing in MySQL
 
-We wrote queries to analyze:
+In this project, we tested several hypotheses related to crime patterns across Berlin districts using MySQL. We calculated normalized crime metrics based on population and age groups.
 
-- **Crimes per 1,000 residents** by district and age group.
-- **Breakdowns by crime type** (violent, theft, property).
-- **Correlations between age groups and specific crime types**.
-- **Temporal trends** for selected crimes over multiple years.
+### H1 – Overall Threat & Damage
+
+- Calculated threat level per every 1000 residents for each district.
+- **Finding:** Tempelhof-Schöneberg, Mitte, and Friedrichshain-Kreuzberg have the highest threat per 1,000 residents, while Treptow-Köpenick, Lichtenberg, and Pankow have the lowest.
+- **Conclusion:** Certain central districts experience disproportionately higher threats relative to population.
+
+### H3 – Older Population & Burglary
+
+- Analyzed burglary incidents relative to the older population.
+- **Finding:** Mitte and Tempelhof-Schöneberg show higher burglary incidents per older resident, whereas districts like Treptow-Köpenick and Lichtenberg have lower rates.
+- **Conclusion:** Burglary risk is concentrated in more central districts with higher older population density.
+
+### H4 – Young Population & Drug Offenses
+
+- Calculated drug-related crimes relative to the young population.
+- **Finding:** Mitte, Friedrichshain-Kreuzberg, and Tempelhof-Schöneberg show the highest incidence per young resident; Treptow-Köpenick and Lichtenberg are lowest.
+- **Conclusion:** Drug offenses are more prevalent in central districts with higher young population density.
+
+### H5 – Car Theft Trend Over Years
+
+- Aggregated total car thefts from 2012–2019.
+- **Finding:** Steady increase until 2016 (peak: 7,784 thefts), followed by a decline to ~6,138 in 2019.
+- **Conclusion:** Car theft trends indicate a peak period followed by stabilization, suggesting impact of preventive measures or enforcement policies.
+
+**Overall:**  
+Our MySQL queries enabled normalization of crime data relative to population and age groups, confirming that central districts face higher crime rates, while trends like car theft vary over time. These insights validate our initial hypotheses and provide a basis for targeted interventions.
 
 ---
 

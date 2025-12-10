@@ -260,3 +260,110 @@ GROUP BY
     YearlyCrimes.location
 ORDER BY
 SUM(CASE WHEN YearlyCrimes.year = 2019 THEN YearlyCrimes.total_crimes ELSE 0 END) DESC;
+
+
+-- most common crimes in alexanderplatz in 2019
+
+SELECT
+    crime_type,
+    SUM(total_count) AS total_count 
+FROM (
+     --  the Robbery numbers
+    SELECT 'robbery' AS crime_type, robbery AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019 -- only want Alexplatz and 2019 data!
+    UNION ALL
+
+    --  Street Robbery numbers 
+    SELECT 'street_robbery' AS crime_type, street_robbery AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Injury numbers
+    SELECT 'injury' AS crime_type, injury AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Aggravated Assault 
+    SELECT 'agg_assault' AS crime_type, agg_assault AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Threat numbers
+    SELECT 'threat' AS crime_type, threat AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Theft 
+    SELECT 'theft' AS crime_type, theft AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Car-related Crimes 
+    SELECT 'car' AS crime_type, car AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Theft From Car (separate from 'car' for some reason)
+    SELECT 'from_car' AS crime_type, from_car AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Bike Theft
+    SELECT 'bike' AS crime_type, bike AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Burglary
+    SELECT 'burglary' AS crime_type, burglary AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Fire incidents
+    SELECT 'fire' AS crime_type, fire AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    --  Arson
+    SELECT 'arson' AS crime_type, arson AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Damage
+    SELECT 'damage' AS crime_type, damage AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Graffiti
+    SELECT 'graffiti' AS crime_type, graffiti AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- drugs Crimes
+    SELECT 'drugs' AS crime_type, drugs AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+    UNION ALL
+
+    -- Local Crimes
+    SELECT 'local' AS crime_type, local AS total_count
+    FROM crimes
+    WHERE location = 'alexanderplatz' AND year = 2019
+) AS UnpivotedCrimes 
+GROUP BY
+    crime_type
+ORDER BY
+    total_count DESC;

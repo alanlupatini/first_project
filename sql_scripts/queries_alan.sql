@@ -71,12 +71,10 @@ HAVING
 -- CRI Analysis by District
 
 SELECT
-    -- Population table is T1, Crimes table (subquery) is T2
     T1.district,
-    SUM(T2.Total_Crimes) AS Total_Crimes_Reported,
+    ROUND(CAST(SUM(T2.Total_Crimes) AS REAL) / 7) AS Avg_Annual_Crimes,
     SUM(T1.total) AS Total_Population,
-    -- Calculate crime rate per 1000 residents
-    (CAST(SUM(T2.Total_Crimes) AS REAL) * 1000) / SUM(T1.total) AS Crime_Rate_per_1000
+    ROUND((CAST(SUM(T2.Total_Crimes) AS REAL) / 7 * 1000) / SUM(T1.total)) AS Avg_Annual_Crime_Rate_per_1000
 FROM
     Population T1
 INNER JOIN
@@ -84,7 +82,6 @@ INNER JOIN
         SELECT
             District,
             Code,
-            -- Sum all 16 crime columns to get the total crimes for that location/year
             Robbery + Street_robbery + Injury + Agg_assault + Threat + Theft + Car + From_car + Bike + Burglary + Fire + Arson + Damage + Graffiti + Drugs + Local AS Total_Crimes
         FROM
             Crimes
@@ -92,7 +89,7 @@ INNER JOIN
 GROUP BY
     T1.district
 ORDER BY
-    Crime_Rate_per_1000 DESC;
+    Avg_Annual_Crime_Rate_per_1000 DESC;
 
 
 

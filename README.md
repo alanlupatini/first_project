@@ -1,19 +1,18 @@
-<<<<<<< HEAD
 # 🏙️ Berlin Urban Safety Analysis: A BIUS Project
-=======
-# Project overview
-The Berlin Institute for Urban Safety (BIUS)
 
-Focus: An independent, non-profit think tank dedicated to researching the causes and consequences of crime for evidence-based policy recommendations.
+---
 
-This project is an independent analysis conducted on behalf of the **Berlin Institute for Urban Safety (BIUS)**, a non-profit think tank. The goal is to conduct evidence-based research into the causes and consequences of crime for evidence-based policy recommendations.
-The presentation of this project is available here: https://docs.google.com/presentation/d/1Y4ldaEibWwJ1H7KI63VCK8tHZ-8zNZeO/edit?usp=sharing&ouid=105239850282776443277&rtpof=true&sd=true
+## Project Overview
+
+The Berlin Institute for Urban Safety (BIUS) is an independent, non-profit think tank dedicated to researching the causes and consequences of crime for evidence-based policy recommendations.
+
+This project is an independent analysis conducted on behalf of BIUS, aiming to investigate crime patterns in Berlin by combining demographic and crime datasets.
 
 ---
 
 ## 💾 Data Sources
 
-The analysis relies on merging two key public datasets, linked by geographic identifiers (postal/area codes and districts).
+The analysis merges two key public datasets, linked by geographic identifiers (postal/area codes and districts):
 
 | Dataset                        | Source                                                    | Purpose                                                                                    |
 | :----------------------------- | :-------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
@@ -24,91 +23,134 @@ The analysis relies on merging two key public datasets, linked by geographic ide
 
 ## Day 1: Exploration and Hypothesis Formulation
 
-The initial day focused on exploratory data analysis (EDA) and defining the core analytical framework.
+The initial day focused on exploratory data analysis (EDA) and defining the analytical framework.
 
 ### Analysis Goals
 
-The project is structured around three primary goals designed to inform policymakers:
-
-1.  **Goal A: Develop a Crime Risk Index.** Create a weighted index that combines crime rates (crime count / population) to rank districts.
-2.  **Goal B: Identify Correlation between Demographics and Crime.** Determine if the proportion of specific age groups is statistically correlated with specific crime types.
-3.  **Goal C: Analyze Crime Specialization and Temporal Trends.** Investigate unique crime patterns in specific districts and analyze year-over-year changes.
+1. **Goal A:** Develop a Crime Risk Index — a weighted index that combines crime rates (crime count / population) to rank districts.
+2. **Goal B:** Identify correlations between demographics and crime — check whether specific age groups are associated with certain crime types.
+3. **Goal C:** Analyze crime specialization and temporal trends — investigate unique crime patterns in districts and changes over time.
 
 ### Testable Hypotheses
 
-Five testable hypotheses were established to guide the statistical analysis:
-
-| ID     | Category                  | Hypothesis Statement                                                                                                                  |
-| :----- | :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------ |
-| **H1** | General Crime Rate        | Districts with higher population density will have a higher absolute number of non-violent crimes.                                    |
-| **H2** | General Crime Rate        | The **Regierungsviertel** will have an above-average rate of **Threat** and **Damage** (per capita).                                  |
-| **H3** | Demographics (Age)        | Locations with a higher proportion of residents aged **65 and older** will show a higher rate of **Burglary** per capita.             |
-| **H4** | Demographics (Age)        | Locations with a higher proportion of the **$18-27$** age group will correlate with a higher rate of **Drugs** offenses (per capita). |
-| **H5** | Specific Crime (Temporal) | The rate of **Car theft** has declined over the years covered in the dataset.                                                         |
+| ID     | Category                  | Hypothesis Statement                                                                                                                |
+| :----- | :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------- |
+| **H1** | General Crime Rate        | Districts with higher population density will have a higher absolute number of non-violent crimes.                                  |
+| **H2** | General Crime Rate        | The **Regierungsviertel** will have an above-average rate of **Threat** and **Damage** (per capita).                                |
+| **H3** | Demographics (Age)        | Locations with a higher proportion of residents aged **65 and older** will show a higher rate of **Burglary** per capita.           |
+| **H4** | Demographics (Age)        | Locations with a higher proportion of the **18-27** age group will correlate with a higher rate of **Drugs** offenses (per capita). |
+| **H5** | Specific Crime (Temporal) | The rate of **Car theft** has declined over the years covered in the dataset.                                                       |
 
 ---
 
 ## Day 2: Data Cleaning and Preprocessing
 
-The second day was dedicated to preparing the raw data for analysis by ensuring consistent formatting and readability.
+The second day focused on preparing the raw data for analysis and ensuring consistent formatting.
 
-### Key Cleaning Steps Performed (Python/Pandas)
+### Key Cleaning Steps (Python/Pandas)
 
-<<<<<<< HEAD
-1.  **Column Name Translation & Standardization:** All column names were translated and standardized (e.g., spaces replaced with underscores).
-2.  **Umlaut Removal:** Umlauts and other special characters were removed from string columns (e.g., `District` names) to prevent encoding issues during merging and analysis.
-3.  **Initial Dataset Analysis:** Conducted the first dataset analysis and EDA on the separate data sources to understand distributions and data quality issues.
+1. **Column Name Standardization:** Translated and standardized column names (e.g., spaces replaced with underscores).
+2. **Umlaut Removal:** Removed special characters from string columns to avoid encoding issues.
+3. **Initial EDA:** Conducted preliminary analysis to check distributions, missing values, and data quality.
 
 ---
-=======
-# Questions 
 
-Goal A: Develop a Crime Risk Index.
-Action: Create a weighted index that combines crime rates (crime count / population) for multiple crime categories to rank Berlin's districts/locations from safest to most dangerous. This could be a single, easily digestible metric for policymakers.
+## Day 3: Data Integration, Feature Engineering, and MySQL Queries
 
-Goal B: Identify Correlation between Demographics and Crime.
-Action: Determine if the proportion of specific age groups (e.g., 18 - 27 or 65 und mehr) in a location is statistically correlated with specific types of crime (e.g., street robbery or burglary).
+Day 3 focused on merging the datasets, calculating features, and creating SQL queries for analysis.
 
-Goal C: Analyze Crime Specialization and Temporal Trends.
-Action: Investigate which types of crime are disproportionately high in specific districts (e.g., is Graffiti a unique problem for one district compared to the rest of the city?). Also, analyze year-over-year changes to identify fastest-growing or declining crime categories.
+### Data Integration and Modeling (ERD)
 
+For this project, we have **three main tables**:
 
-Testable Hypotheses
-General Crime Rate Hypothesis
-H1: Districts with a higher population density (as calculated by combining the population data with external area data, or simply assuming higher population overall) will have a higher absolute number of non-violent crimes (e.g., Theft, Damage, Graffiti).
+### 1. `population_data`
 
-H2: The district containing the Regierungsviertel (Government District) will have an above-average rate of Threat and Damage (per capita) compared to residential districts due to its political significance and potential for protest activity.
+Contains demographic information per postal code.
 
-Demographic and Crime Type Hypotheses
-H3 (Age-related): Locations with a higher proportion of residents in the 65 and older age group will show a higher rate of Burglary per capita compared to the Berlin average, as criminals may perceive these areas as containing more vulnerable targets.
+**Key columns:**
 
-H4 (Age-related): Locations with a higher proportion of the 18 - 27 age group will correlate with a higher rate of Drugs offenses (per capita), reflecting typical patterns of drug use and policing effort.
+- `postal_code` → unique identifier for each postal code
+- `district` → Berlin district name
+- `total` → total population
+- Age group columns: `age_under_6`, `age_6_to_15`, `age_15_to_18`, `age_18_to_27`, `age_27_to_45`, `age_45_to_55`, `age_55_to_65`, `age_65_plus`
+- `female_total` → total female population
 
-Specific Crime Hypotheses
-H5 (Temporal Trend): The rate of Car theft (stolen cars) has declined over the years covered in the dataset, due to modern vehicle anti-theft technology.
+---
 
+### 2. `location_bridge`
 
-# Dataset 
-We used two raw datasets, one containing demographic information from Berlin's districs and another with information of different crimes commited per district. 
->>>>>>> main
+Maps districts to postal codes and specific locations.
 
-Data Integration, Modeling (ERD), and Feature Engineering
+**Key columns:**
 
-<<<<<<< HEAD
-Day 3 focuses on uniting the disparate data sources based on the established ERD, and preparing the calculated features for hypothesis testing.
+- `district` → district name
+- `code` → postal/area code
+- `location` → specific location/neighborhood within the district
 
-### 1. Data Integration and Modeling (ERD) 📐
-=======
-- District names contain German characters that need to be cleaned out to work in UTF-8. 
-- ...
-- ...
+---
 
-## Solutions for the dataset issues
-- We had to remove umlauts and eszetts, for example, substituting them with UTF-8 characters.
->>>>>>> main
+### 3. `crime_data`
 
-- **Action:** The **Entity-Relationship Diagram (ERD)** was formalized, establishing a robust three-table structure required for integration.
-- **Relationship:** The final model confirms a **Many-to-Many** relationship between **Population** and **Crimes**, linked via the **Location** (bridge) table.
-  - **Tables:** `Population` (Demographics), `Crimes` (Statistics), and `Location` (Bridge/Intermediate).
-  - **Key Merge Strategy:** A **two-step inner join** is used: first linking `Crimes` to `Location`, and then linking the result to `Population` on `postal_code`.
-- **Final Result:** A master DataFrame containing all crime and population statistics linked by the correct geographical and temporal keys.
+Contains crime counts by location and year.
+
+**Key columns:**
+
+- `year` → year of record
+- `district` → district name
+- `code` → postal/area code
+- `location` → location name
+- Multiple crime type columns: `robbery`, `street_robbery`, `injury`, `agg_assault`, `threat`, `theft`, `car`, `from_car`, `bike`, `burglary`, `fire`, `arson`, `damage`, `graffiti`, `drugs`, `local`
+
+---
+
+### 🔗 Relationships
+
+- **`population_data` → `location_bridge`**:  
+  Linked via `district` and optionally `postal_code`. Allows mapping demographic data to specific locations.
+
+- **`location_bridge` → `crime_data`**:  
+  Linked via `district`, `code`, and `location`. Provides aggregation of crime counts per district or location.
+
+- **`population_data` → `crime_data`**:  
+  Can be joined through `district` and `postal_code` (via the bridge if needed) to calculate per-capita crime rates and demographic correlations.
+
+---
+
+## Crime Analysis – Hypotheses Testing in MySQL
+
+In this project, we tested several hypotheses related to crime patterns across Berlin districts using MySQL. We calculated normalized crime metrics based on population and age groups.
+
+### H1 – Overall Threat & Damage
+
+- Calculated threat level per every 1000 residents for each district.
+- **Finding:** Tempelhof-Schöneberg, Mitte, and Friedrichshain-Kreuzberg have the highest threat per 1,000 residents, while Treptow-Köpenick, Lichtenberg, and Pankow have the lowest.
+- **Conclusion:** Certain central districts experience disproportionately higher threats relative to population.
+
+### H3 – Older Population & Burglary
+
+- Analyzed burglary incidents relative to the older population.
+- **Finding:** Mitte and Tempelhof-Schöneberg show higher burglary incidents per older resident, whereas districts like Treptow-Köpenick and Lichtenberg have lower rates.
+- **Conclusion:** Burglary risk is concentrated in more central districts with higher older population density.
+
+### H4 – Young Population & Drug Offenses
+
+- Calculated drug-related crimes relative to the young population.
+- **Finding:** Mitte, Friedrichshain-Kreuzberg, and Tempelhof-Schöneberg show the highest incidence per young resident; Treptow-Köpenick and Lichtenberg are lowest.
+- **Conclusion:** Drug offenses are more prevalent in central districts with higher young population density.
+
+### H5 – Car Theft Trend Over Years
+
+- Aggregated total car thefts from 2012–2019.
+- **Finding:** Steady increase until 2016 (peak: 7,784 thefts), followed by a decline to ~6,138 in 2019.
+- **Conclusion:** Car theft trends indicate a peak period followed by stabilization, suggesting impact of preventive measures or enforcement policies.
+
+**Overall:**  
+Our MySQL queries enabled normalization of crime data relative to population and age groups, confirming that central districts face higher crime rates, while trends like car theft vary over time. These insights validate our initial hypotheses and provide a basis for targeted interventions.
+
+---
+
+### Presentation
+
+The following slides will visualize key findings, supported by MySQL queries and data analysis performed during the project.
+
+>

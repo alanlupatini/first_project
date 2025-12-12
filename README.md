@@ -8,6 +8,7 @@ The Berlin Institute for Urban Safety (BIUS) is an independent, non-profit think
 
 This project is an independent analysis conducted on behalf of BIUS, aiming to investigate crime patterns in Berlin by combining demographic and crime datasets.
 
+The presentation is available [here](https://docs.google.com/presentation/d/1Y4ldaEibWwJ1H7KI63VCK8tHZ-8zNZeO/edit?usp=sharing&ouid=105239850282776443277&rtpof=true&sd=true).
 ---
 
 ## 💾 Data Sources
@@ -153,4 +154,4 @@ Our MySQL queries enabled normalization of crime data relative to population and
 
 The following slides will visualize key findings, supported by MySQL queries and data analysis performed during the project.
 
->
+> https://docs.google.com/presentation/d/1Y4ldaEibWwJ1H7KI63VCK8tHZ-8zNZeO/edit?usp=sharing&ouid=105239850282776443277&rtpof=true&sd=true
